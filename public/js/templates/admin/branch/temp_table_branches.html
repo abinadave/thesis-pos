@@ -1,0 +1,38 @@
+<div class="span9">
+
+    <input v-model="search" type="text" class="form-control" placeholder="Search branch">
+
+		<div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-building"></i></span>
+            <h5>Branch List </h5>
+          </div>
+
+          <div class="widget-content nopadding">
+            <table class="table table-bordered data-table">
+              <thead>
+                <tr>
+                  <th class="text-center">Branch name</th>
+                  <th class="text-center">Brance Code</th>
+                  <th class="text-center">Items</th>
+                  <th class="text-center">Staff's</th>
+                  <th class="text-center">Date created</th>
+                  <th class="text-center" colspan="2">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                 <tr v-for="branch in branches | filterBy search in 'name' 'code'">
+                     <td style="text-align: center">{{ branch.name }}</td>
+                     <td style="text-align: center">{{ branch.code }}</td>
+                     <td style="text-align: center">{{ getTotalItemsInBranch(branch).length }}</td>
+                     <td style="text-align: center">{{ getStaffLengthInBranch(branch).length }}</td>
+                     <td style="text-align: center">{{ getDateCreated(branch.created_at) }}</td>
+                     <td width="10"><a @click="deleteBranch(branch)" style="cursor: pointer"><span class="icon icon-trash"></span></a></td>
+                     <td width="10"><a @click="editBranch(branch)" style="cursor: pointer"><span class="icon icon-pencil"></span></a></td>
+                 </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+    </div>
+   <modal-update-branch :branch="modalEditBranch"></modal-update-branch>

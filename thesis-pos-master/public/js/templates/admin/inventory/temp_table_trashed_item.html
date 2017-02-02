@@ -1,0 +1,43 @@
+<div class="span12">
+    <input v-model="search" type="text" class="form-control" placeholder="Search branch">
+
+		<div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-trash"></i></span>
+            <h5>Trashed Items</h5>
+          </div>
+
+          <div class="widget-content nopadding">
+             <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th style="text-align: left">Item name</th>
+              <th>Purchase Price</th>
+              <th>Selling Price</th>
+              <th>Running Balance</th>
+              <th>Reorder point</th>
+              <th style="text-align: left">Additional Description</th>
+              <th colspan="2">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr v-for="item in items | orderBy 'id' -1 | filterBy search in 'name' 'category_name' 'purchase_price' 'selling_price' 'reorder_point' 'additional_description'">
+                  <td style="text-align: center">{{ getCategoryName(item) | uppercase }}</td>
+                  <td style="text-align: left">{{ item.name | uppercase }}</td>
+                  <td style="text-align: center">{{ item.purchase_price }}</td>
+                  <td style="text-align: center">{{ item.selling_price }}</td>
+                  <td style="text-align: center">{{ item.running_balance }}</td>
+                  <td style="text-align: center">{{ item.reorder_point }}</td>
+                  <td style="text-align: left">{{ item.additional_description }}</td>
+                  <td width="10"><a title="click this to restore item" style="cursor: pointer" @click="restoreItem(item)"><i class="icon icon-refresh"></i></a></td>
+                  <td width="10"><a title="click this to delete item permanently" style="cursor: pointer" @click="deletePermanently(item)"><i class="icon icon-trash"></i></a></td>
+              </tr>
+              <tr v-show="!items.length">
+                 <td colspan="7">No data was found</td>
+              </tr>
+          </tbody>
+        </table>
+
+          </div>
+        </div>
+    </div>

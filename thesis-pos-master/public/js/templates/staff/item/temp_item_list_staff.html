@@ -1,0 +1,56 @@
+<div class="span12" v-show="!creatingPurchases">
+    <input type="text" v-model="search" class="form-control" placeholder="Search item here...">
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    Choose Category<select style="width: 200px" v-model="selected_category" id="select-category">
+       <option value="0">All</option>
+       <option value="{{ cat.id }}" v-for="cat in categories | orderBy 'name'">
+           <span>{{ cat.name }}</span>
+       </option>
+    </select>
+    <button @click="createPurchase()" class="btn btn-primary btn-sm pull-right">Create Purchases 
+    <span class="label label-danger" v-show="selectedItems.length">{{ selectedItems.length }}</span></button>
+    <div class="widget-box">
+
+      <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+        <h5>Item List <label class="badge">{{ items.length }}</label></h5>
+      </div>
+
+      <div class="widget-content nopadding">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th width="1"></th>
+              <th>Category</th>
+              <th style="text-align: left">Item name</th>
+              <th>Purchase Price</th>
+              <th>Selling Price</th>
+              <th>Running Balance</th>
+              <th>Unit</th>
+              <th>Reorder point</th>
+              <th style="text-align: left">Additional Description</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr v-for="item in items | orderBy 'id' -1 | filterBy search in 'name' 'category_name' 'purchase_price' 'selling_price' 'reorder_point' 'additional_description'">
+                  <td style="text-align: center"><input type="checkbox" @change="chkChange($event, item)" /></td>
+                  <td style="text-align: center">{{ getCategoryName(item) | uppercase }}</td>
+                  <td style="text-align: left">{{ item.name | uppercase }}</td>
+                  <td style="text-align: center">{{ item.purchase_price }}</td>
+                  <td style="text-align: center">{{ item.selling_price }}</td>
+                  <td style="text-align: center">{{ item.running_balance }}</td>
+                  <td style="text-align: center">{{ item.unit }}</td>
+                  <td style="text-align: center">{{ item.reorder_point }}</td>
+                  <td style="text-align: left">{{ item.additional_description }}</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div v-show="creatingPurchases">
+    <form-purchases 
+      :selected-items.sync="selectedItems"
+      :creating-purchases.sync="creatingPurchases"
+      :items.sync="items"
+    ></form-purchases>
+  </div>

@@ -1,0 +1,29 @@
+<div class="span7">
+    <input v-model="search" type="text" class="form-control" placeholder="Search category">
+
+    <div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+            <h5>Category List</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered data-table">
+              <thead>
+                <tr>
+                    <th>Category name</th>
+                    <th>Total Items</th>
+                    <th colspan="2"></th>
+                </tr>
+              </thead>
+              <tbody>
+                 <tr v-for="cat in categories | filterBy search in 'name' 'code'">
+                     <td>{{ cat.name | uppercase }}</td>
+                     <td style="text-align: center">{{ getItemsInThisCat(cat).length }}</td>
+                     <td width="1"><a style="cursor: pointer" @click="editCategory(cat)"><i class="icon icon-pencil"></i></a></td>
+                     <td width="1"><a style="cursor: pointer" @click="removeCategory(cat)"><i class="text-danger icon icon-trash"></i></a></td>
+                 </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+    </div>

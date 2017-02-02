@@ -1,0 +1,49 @@
+<label style="display: inline">Search</label><input type="text" v-model="search" placeholder="Search here.." class="form-control span2">
+&nbsp;&nbsp;&nbsp;&nbsp;
+<label style=" display: inline">Choose Branch</label>
+<select style="width: 200px;" v-model="selected_branch" id="select-branch">
+    <option value="0">All</option>
+    <option value="{{ branch.id }}" v-for="branch in branches | orderBy 'name'">
+        <span>{{ branch.name }}</span>
+    </option>
+</select>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<label style="display: inline">Choose Date</label>
+<input type="text" id="datepicker-purchase" class="span2" v-model="selected_date"> 
+<span @click="clearDate()" style="margin-left: -25px; cursor: pointer" class="icon icon-remove icon-2x"></span>
+<label style="display: inline" class="pull-right">No. of purchases <span class="label label-warning">{{ foundItems }}</span></label>
+<div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+            <h5>Purchased items</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th style="text-align: center">Qty</th>
+                  <th style="text-align: center">Unit</th>
+                  <th style="text-align: center">Item</th>
+                  <th style="text-align: center">Date</th>
+                  <th style="text-align: center">Time</th>
+                  <th style="text-align: center">Branch</th>
+                  <th style="text-align: right">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+	                <tr v-for="purchase_item in purchase_items | filterBy search in 'qty' 'old_price' 'unit' 'name' 'branch_name'">
+  		              <td style="text-align: center">{{ purchase_item.qty }}</td>
+  		              <td style="text-align: center">{{ getItemWhat(purchase_item,'unit') }}</td>
+                    <td style="text-align: center">{{ getItemWhat(purchase_item,'name') }}</td>
+  		              <td style="text-align: center">{{ getPurchasedDate(purchase_item) }}</td>
+                    <td style="text-align: center">{{ getPurchasedTime(purchase_item) }}</td>
+                    <td style="text-align: center">{{ getPurchaseBranch(purchase_item) }}</td>
+                    <td style="text-align: right">{{ purchase_item.old_price | currency '' }}</td>
+	                </tr>
+	           </tbody>
+            </table>
+          </div>
+        </div>
+	</div>
+</div>

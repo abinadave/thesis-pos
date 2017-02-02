@@ -1,0 +1,23 @@
+<div class="span6">
+	<div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>Category form</h5>
+        </div>
+        <div class="widget-content nopadding">
+
+          <form @submit.prevent="saveCategory()" action="#" method="get" class="form-horizontal">
+            <div class="control-group">
+              <label class="control-label">Category</label>
+              <div class="controls">
+                <input v-model="form.name" type="text" class="span11 branch-name" placeholder="Name" />
+                <span class="text-danger" style="color: red"><br>{{ errors.name }}</span>
+              </div>
+            </div>            
+            <div class="form-actions">
+              <button type="submit" class="btn btn-success">Save Category</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+</div>

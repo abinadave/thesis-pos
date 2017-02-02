@@ -1,0 +1,26 @@
+<input v-model="search" type="text" class="form-control" placeholder="Search">
+
+<input v-model="date_to" type="date" class="form-control pull-right">
+<input v-model="date_from" type="date" class="form-control pull-right">
+<!-- <label style="display: inline; margin-top: 5px" class="pull-right label label-info">Filter &nbsp;&nbsp;&nbsp;</label> -->
+<a @click="emitClearDate"  style="cursor: pointer; margin-top: 5px; text-decoration: underline;" class="pull-right">clear filter </a>
+<table class="table table-bordered data-table">
+  <thead>
+      <tr>
+        <th class="text-center">Supplier name</th>
+        <th class="text-center">Verified by</th>
+        <th class="text-center">Date transaction</th>
+        <th class="text-center">Product received</th>
+        <th class="text-center"></th>
+      </tr>
+  </thead>
+  <tbody>
+     <tr v-for="form in receivingForms | filterBy search in 'supplier' 'verified_by' 'date' 'names'">
+        <td style="text-align: center">{{ form.supplier | uppercase }}</td>
+        <td style="text-align: center">{{ form.verified_by | uppercase }}</td>
+        <td style="text-align: center">{{ form.date }}</td>
+        <td style="text-align: center">{{ getItemsReceived(form) }}</td>
+        <td style="text-align: center">{{ getNames(form) }}</td>
+     </tr>
+  </tbody>
+</table>

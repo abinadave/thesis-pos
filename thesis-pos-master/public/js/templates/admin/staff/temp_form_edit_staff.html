@@ -1,0 +1,49 @@
+<style type="text/css">
+  #inventory-items .text-danger {
+      color: #a94442;
+  }
+</style>
+<div class="span6" id="inventory-items">
+      <div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>Item</h5>
+        </div>
+        <div class="widget-content nopadding">
+          <form @submit.prevent="sendForm()" class="form-horizontal">
+            <div class="control-group">
+              <label class="control-label">Staff name</label>
+              <div class="controls">
+                <input v-model="formStaff.name" type="text" class="span11" placeholder="Item name" />
+                <span class="text-danger"><br>{{ errors.name }}</span>
+              </div>
+              <label class="control-label">Branch</label>
+              <div class="controls">
+                <select v-model="branch">
+                   <option selected disabled>Select new branch</option>
+                   <option 
+                     v-for="branch in branches" 
+                     value="branch.id">
+                      {{ branch. name }}
+                   </option>
+                </select>
+                <span class="text-danger"><br>{{ errors.branch }}</span>
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button @click="editingStaff = false" type="button" class="btn btn-default">Back</button>
+              <button type="submit" class="btn btn-success">
+                <span >
+                  Save
+                </span>
+                <span v-show="saving">
+                   Saving Please wait&nbsp;&nbsp;&nbsp;
+                   <i class="icon icon-spinner icon-spin icon-fw"></i>
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>  
+ 
+    </div>

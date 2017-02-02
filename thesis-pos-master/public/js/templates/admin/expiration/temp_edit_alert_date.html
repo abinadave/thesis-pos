@@ -1,0 +1,20 @@
+<div class="span4">
+    <div class="widget-box">
+      <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+        <h5>Personal-info</h5>
+      </div>
+      <div class="widget-content nopadding">
+        <form @submit.prevent="saveDaysBeforeAlert()" class="form-horizontal">
+          <div class="control-group">
+            <label class="control-label">Days </label>
+            <div class="controls">
+              <input v-model="days" type="text" class="span11" placeholder="Enter days before system alert" />
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-success">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>

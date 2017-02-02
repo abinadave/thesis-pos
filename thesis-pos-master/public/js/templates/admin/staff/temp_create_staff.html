@@ -1,0 +1,70 @@
+<style type="text/css">
+	.form-errors {
+		font-weight: bolder;
+		/*font-size: 15px;*/
+		color: #f74d4d;
+	}
+</style>
+<div class="span6">
+	<div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>Staff form</h5>
+        </div>
+        <div class="widget-content nopadding">
+
+          <form @submit.prevent="saveStaff()" action="#" method="get" class="form-horizontal">
+            <div class="control-group">
+              <label class="control-label">Fullname</label>
+              <div class="controls">
+                <input v-model="form.name" type="text" class="span11 branch-name"/>
+                <span :class="{ 'form-errors' : errors.name }"><br>{{ errors.name }}</span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">Select input</label>
+              <div class="controls">
+                 <select id="selected-branch" class="select2" v-model="form.branch_id">
+                    <option value="" selected disabled>Select Branch</option>
+                    <option value="{{ branch.id }}" v-for="branch in branches">
+                    	{{ branch.name }}
+                    </option>
+                 </select>
+                 <span :class="{ 'form-errors' : errors.branch_id }"><br>{{ errors.branch_id }}</span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">Designation</label>
+              <div class="controls">
+                <input type="text" class="span11" value="branch staff" disabled/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">Email</label>
+              <div class="controls">
+                <input v-model="form.email" type="text" class="span11" />
+                <span :class="{ 'form-errors' : errors.email }"><br>{{ errors.email }}</span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">Password</label>
+              <div class="controls">
+                <input v-model="form.password" type="text" class="span11" />
+                <span :class="{ 'form-errors' : errors.password }"><br>{{ errors.password }}</span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">Confirm password</label>
+              <div class="controls">
+                <input v-model="form.password_confirmation" type="text" class="span11" />
+                <span :class="{ 'form-errors' : errors.password_confirmation }"><br>{{ errors.password_confirmation }}</span>
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button :disabled="saving" type="submit" class="btn btn-success">Save staff</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+</div>

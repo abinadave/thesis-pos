@@ -1,0 +1,89 @@
+<div class="span12" v-show="editingItem === false && addingSomeStocks === false">
+    <input type="text" v-model="search" debounce="2000" class="form-control" placeholder="Search item here...">
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    Choose Branch
+    <select style="width: 200px" v-model="selected_branch" id="select-branch">
+       <option value="0">All</option>
+       <option value="{{ branch.id }}" v-for="branch in branches | orderBy 'name'">
+           <span>{{ branch.name }}</span>
+       </option>
+    </select>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    Choose Category<select style="width: 200px" v-model="selected_category" id="select-category">
+       <option value="0">All</option>
+       <option value="{{ cat.id }}" v-for="cat in categories | orderBy 'name'">
+           <span>{{ cat.name }}</span>
+       </option>
+    </select>
+
+    <div class="widget-box">
+
+      <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+        <h5>Item List </h5><span class="badge" v-text="items.length" style="margin: 10px"></span>
+        <a @click="showModalAddStock()" class="pull-right" style="cursor: pointer; margin-top: 8px; margin-right: 15px"><i class="icon icon-plus"></i> &nbsp;&nbsp;Stock</a>
+      </div>
+
+      <div class="widget-content nopadding" style="overflow: auto">
+        <table class="table table-bordered table-striped" style="width: 1000px" id="tbl-items">
+          <thead> 
+            <tr>
+              <th width="1"></th>
+              <th>Branch</th>
+              <th>Category</th>
+              <th style="text-align: left">Item name</th>
+              <th style="text-align: right">Purchase Price</th>
+              <th style="text-align: right">Selling Price</th>
+              <th style="text-align: right">Stocks</th>
+              <th>Unit</th>
+              <th style="text-align: right">Reorder point</th>
+              <th style="text-align: left">LOT#</th>
+              <th style="text-align: left">Type</th>
+              <th width="1">delete</th>
+              <th width="1">edit</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr v-for="item in items | orderBy 'id' -1 | filterBy search in 'name' 'category_name' 'branch_name' 'purchase_price' 'selling_price' 'reorder_point' 'additional_description'">
+                  <td :checked="checkIfChecked(item)" @change="addSelectedItems($event, item)"><input type="checkbox" value="{{ item.id }}"></td>
+                  <td style="text-align: center">{{ getBranchName(item) | uppercase }}</td>
+                  <td style="text-align: center">{{ getCategoryName(item) | uppercase }}</td>
+                  <td style="text-align: left">{{ item.name | uppercase }}</td>
+                  <td style="text-align: right">{{ item.purchase_price | currency '' }}</td>
+                  <td style="text-align: right">{{ item.selling_price | currency '' }}</td>
+                  <td style="text-align: right">{{ item.running_balance }}</td>
+                  <td style="text-align: center">{{ item.unit }}</td>
+                  <td style="text-align: right">{{ item.reorder_point }}</td>
+                  <td style="text-align: left">{{ item.additional_description }}</td>
+                  <td style="text-align: left">{{ item.bg_type }}</td>
+                  <td width="1" style="text-align: center"><a style="cursor: pointer" @click="removeItem(item)"><i class="icon icon-remove" style="font-size: 13px"></i></a></td>
+                  <td width="1" style="text-align: center"><a style="cursor: pointer" @click="editItem(item)"><i class="icon icon-edit" style="font-size: 13px"></i></a></td>
+              </tr>
+              <tr v-show="!items.length && loadingData === false">
+                 <td colspan="10">No data was found</td>
+              </tr>
+              <tr v-show="loadingData === true">
+                 <td colspan="10"><i class="icon icon-spinner icon-spin icon-fw" style="font-size: 17px"></i> &nbsp;&nbsp;Fetching data from the server </td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div v-show="editingItem">
+      <form-edit-item 
+      :item.sync="modalUpdateItem" 
+      :editing-item.sync="editingItem"
+      :categories="categories"
+      :branches="branches"
+      :items.sync="items"
+      ></form-edit-item>
+  </div>
+  <div v-show="addingSomeStocks">
+    <form-add-stocks
+      :items.sync="items"
+      :adding-some-stocks.sync="addingSomeStocks"
+      :selected-items="selectedItems"
+      :rr-no="rrNo"
+      @stocksupdated="updateStocks"
+    ></form-add-stocks>
+  </div>

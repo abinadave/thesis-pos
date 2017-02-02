@@ -1,0 +1,29 @@
+<input id="search-report" v-model="search" type="text" class="form-control" placeholder="Search">
+<a style="cursor: pointer; float: right" @click="printTable()"><i class="icon icon-2x icon-print"></i></a>
+<h4 class="report-header"></h4>
+<table border="1" class="table table-bordered table-hover" id="table-receive-items">
+  <thead>
+      <tr>
+        <th class="text-center">Date Received</th>
+        <th class="text-center">Time</th>
+        <th class="text-center">Supplier</th>
+        <th class="text-center">Qty</th>
+        <th class="text-center">Unit</th>
+        <th class="text-center">Product</th>
+        <th class="text-center">Category</th>
+        <th class="text-center">Branch</th>
+      </tr>
+  </thead>
+  <tbody>
+     <tr v-for="item in receivingItems | filterBy search in 'qty' 'supplier' 'date' 'unit' 'name' 'branch' 'category'">
+       <td style="text-align: center">{{ getDate(item) }}</td>
+       <td style="text-align: center">{{ getTime(item) }}</td>
+       <td style="text-align: center">{{ getSupplier(item) | uppercase }}</td>
+       <td style="text-align: center">{{ item.qty }}</td>
+       <td style="text-align: center">{{ getItemIndex(item,'unit') | uppercase }}</td>
+       <td style="text-align: center">{{ getItemIndex(item,'name') | uppercase }}</td>
+       <td style="text-align: center">{{ getItemCategory(item) | uppercase }}</td>  
+       <td style="text-align: center">{{ getItemBranch(item) | uppercase }}</td>
+   </tr>
+  </tbody>
+</table>

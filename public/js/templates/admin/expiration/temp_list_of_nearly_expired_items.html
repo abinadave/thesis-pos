@@ -1,0 +1,29 @@
+ <div class="widget-box">
+    <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+      <h5>Nearly Expired Items</h5>
+    </div>
+    <div class="widget-content nopadding">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th style="text-align: center;">Item name</th>
+            <th style="text-align: center;">Date Received</th>
+            <th style="text-align: right;">Qty</th>
+            <th style="text-align: center;">Unit</th>
+            <th style="text-align: center;">Expiration Date</th>
+            <th style="text-align: center">Will Expired</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="model in nearlyExpiredItems">
+            <td style="text-align: center;">{{ $parent.getItemName(model) }}</td>
+            <td style="text-align: center;">{{ $parent.getDateReceived(model) }}</td>
+            <td style="text-align: right;">{{ $parent.getReceivedItemQty(model) }}</td>
+            <td style="text-align: center;"> {{ $parent.getItemUnit(model) }}</td>
+            <td style="text-align: center">{{ $parent.getExpiryDate(model) }}</td>
+            <td style="text-align: center">{{ $parent.getDaysFromNow(model) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

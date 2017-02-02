@@ -1,0 +1,54 @@
+<div class="span7">
+    <button class="btn btn-default" @click="creatingPurchases = false">Back <i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+            <h5>Static table</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th width="30">Qty</th>
+                  <th width="80">Current Stock</th>
+                  <th width="60">Unit</th>
+                  <th>Name</th>
+                  <th>Unit Price</th>
+                  <th>Total Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                 <tr v-for="model in selectedItems">
+                     <td ><input v-model="model.qty" style="width: 60px; height: 15px; text-align: center" type="text" /></td>
+                     <td style="text-align: center">{{ getDeductedQty(model) }}</td>
+                     <td style="text-align: center">{{ model.unit }}</td>
+                     <td style="text-align: center">{{ model.name }}</td>
+                     <td style="text-align: center">{{ model.selling_price | currency '' }}</td>
+                     <td style="text-align: center">{{ getTotalAmount(model) | currency '' }}</td>
+                 </tr>
+              </tbody>
+              <tfoot>
+                 <tr>
+                    <th colspan="5" style="text-align: center">Total</th>
+                    <th style="font-size: 20px">{{ getTotalAmountOverAll() | currency '' }}</th>
+                 </tr>
+              </tfoot>
+            </table>
+            
+          </div>
+
+        </div>
+        <form @submit.prevent="savePurchased()">
+            <label>Amount Received <span style="font-size: 20px" class="badge">{{ form.amount_received | currency '' }}</span></label>
+            <input v-model="form.amount_received" type="text" class="form-control">
+            <button :disabled="disableSubmitBtn" type="submit" class="btn btn-info" style="margin-top: -7px">
+               SUBMIT
+            </button>
+            <span v-show="errors.amount_received">
+               <br>
+                 {{ errors.amount_received }}
+               <hr>
+            </span>
+            <label>Change</label>
+            <p style="font-weight: bolder; font-size: 20px">{{ change | currency '' }}</p>
+        </form>
+</div>

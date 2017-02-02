@@ -1,0 +1,32 @@
+<div class="span6">
+	<div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>Branch form</h5>
+        </div>
+        <div class="widget-content nopadding">
+
+          <form @submit.prevent="saveBranch()" action="#" method="get" class="form-horizontal">
+            <div class="control-group">
+              <label class="control-label">Name</label>
+              <div class="controls">
+                <input v-model="form.name" type="text" class="span11 branch-name" placeholder="Branch name" />
+                <span class="text-danger"><br>{{ errors.name }}</span>
+              </div>
+              
+            </div>
+            <div class="control-group">
+              <label class="control-label">Code</label>
+              <div class="controls">
+                <input v-model="form.code" type="text" class="span11" placeholder="Branch code" />
+                <span class="text-danger"><br>{{ errors.code }}</span>
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" class="btn btn-success">Save Branch</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+</div>

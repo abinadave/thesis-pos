@@ -1,0 +1,40 @@
+<div class="span9">
+<label style="display: inline">
+    <input v-model="search" type="text" class="form-control" placeholder="Search branch">
+    <i class="icon icon-search" style="margin-left: -23px; margin-top: -20px"></i>
+</label>    
+		<div class="widget-box" >
+      <div class="widget-title"> <span class="icon icon-trash"></span>
+        <h5>Trashed staff's</h5>
+      </div>
+          <div class="widget-content nopadding">
+              <table class="table table-hover table-bordered">
+                  <thead>
+                      <tr>
+                        <th style="text-align: left">Fullname</th>
+                        <th>Branch</th>
+                        <th>Email/Username</th>
+                        <th>Deleted Date</th>
+                        <th>Data Created</th>
+                        <th colspan="2"></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr v-for="user in trashed">
+                          <td>{{ user.name }}</td>
+                          <td style="text-align: center">{{ user.branch_id }}</td>
+                          <td style="text-align: center">{{ user.email }}</td>
+                          <td style="text-align: center">{{ user.deleted_at }}</td>
+                          <td style="text-align: center">{{ user.created_at }}</td>
+                          <td><a title="click this to restore staff" style="cursor:pointer" @click="restoreStaff(user)"><i class="icon icon-refresh"></i></a></td>
+                          <td><a title="click this to restore staff" style="cursor:pointer" @click="deletePermanently(user)"><i class="icon icon-trash"></i></a></td>
+                      </tr>
+                      <tr v-show="!trashed.length && loadingData === false">
+                          <td colspan="6">No trashed staff was found.</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+        </div>
+    </div>
+  

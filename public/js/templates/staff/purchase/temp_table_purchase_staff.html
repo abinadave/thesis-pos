@@ -1,0 +1,50 @@
+<div class="span12">
+<div class="control-group span3">
+  <label class="control-label">Date picker</label>
+  <div class="controls">
+    <input type="text" id="datepicker-purchase" class="span11" v-model="date"> 
+    <i @click="fetchAll()" style="margin-left: -30px; cursor: pointer;" class="icon icon-remove icon-2x" aria-hidden="true"></i>
+    <span v-show="datePickerMsg" class="help-block" v-text="datePickerMsg">Date with Formate of  (dd-mm-yy)</span> 
+  </div>
+</div>
+<div class="control-group span3">
+  <label class="control-label">Search box</label>
+  <div class="controls">
+    <input type="text" class="span11" v-model="search" placeholder="Search here.."> 
+  </div>
+</div>
+<a @click="printTable()" style="cursor: pointer; float: right"><i class="icon icon-print icon-2x"></i></a>
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+            <h5>Purchases table</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th style="text-align: center">Qty</th>
+                  <th style="text-align: center">Unit</th>
+                  <th style="text-align: center">Item</th>
+                  <th style="text-align: center">Date</th>
+                  <th style="text-align: center">Time</th>
+                  <th style="text-align: right">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+	                <tr v-for="model in purchase_items | filterBy search in 'qty' 'old_price' 'unit' 'name'">
+  		              <td style="text-align: center">{{ model.qty }}</td>
+  		              <td style="text-align: center">{{ getItemWhat(model,'unit') }}</td>
+                    <td style="text-align: center">{{ getItemWhat(model,'name') }}</td>
+  		              <td style="text-align: center">{{ getPurchasedDate(model) }}</td>
+                    <td style="text-align: center">{{ getPurchasedTime(model) }}</td>
+                    <td style="text-align: right">{{ model.old_price | currency '' }}</td>
+	                </tr>
+	           </tbody>
+             <tr>
+                <td colspan="5" style="text-align: center; font-size: 19px;">Total</td>
+                <th style="text-align: right; font-size: 19px; color: #a94442; font-weight: bolder">{{ getTotal | currency '' }}</th>
+             </tr>
+            </table>
+          </div>
+        </div>
+</div>

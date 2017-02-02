@@ -1,0 +1,54 @@
+
+<div class="span10" v-show="!editingStaff">
+<label style="display: inline">
+    <input v-model="search" type="text" class="form-control" placeholder="Search branch">
+    <i class="icon icon-search" style="margin-left: -23px; margin-top: -20px"></i>
+</label>    
+<label style="display: inline; margin-left: 20px">
+   <select style="display: inline; width: 230px" id="selected-branch">
+      <option value="0">Select All</option>
+      <option value="{{ branch.id }}" v-for="branch in branches | orderBy 'name'">
+        {{ branch.name }}
+      </option>
+   </select>
+</label>
+		<div class="widget-box" >
+
+          <div class="widget-title"> <span class="icon icon-user"></span>
+            <h5>Brach staff's</h5>
+          </div>
+
+          <div class="widget-content nopadding" :filtered="getFilteredUsers()">
+              <table class="table table-hover table-bordered">
+                  <thead>
+                      <tr>
+                        <th style="text-align: left">Fullname</th>
+                        <th>Branch</th>
+                        <th>Email/Username</th>
+                        <th>Password</th>
+                        <th>Data Created</th>
+                        <th colspan="2"></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                     <tr v-for="user in filtered | filterBy search in 'name' 'email' 'branch_name'">
+                          <td style="text-align: left">{{ user.name }}</td>
+                          <td style="text-align: center">{{ getBranchName(user) }}</td>
+                          <td style="text-align: center">{{ user.email }}</td>
+                          <td style="text-align: center"><b class="text-info">forbiden<b></td>
+                          <td style="text-align: center">{{ parseDate(user.created_at) }}</td>
+                          <td width="1"><a style="cursor: pointer" @click="updateStaff(user)" title="click this to update staff"><i class="text-info icon icon-pencil"></i></a></td>
+                          <td width="1"><a style="cursor: pointer" @click="deleteUser(user)" title="click this to remove this staff"><i class="text-warning icon icon-remove"></i></a></td>
+                     </tr>
+                  </tbody>
+              </table>
+          </div>
+        </div>
+    </div>
+    <div v-show="editingStaff">
+       <form-edit-staff 
+       :editing-staff.sync="editingStaff"
+       :form-staff.sync="formStaff"
+       :branches="branches"
+       ></form-edit-staff>
+    </div>
