@@ -111,6 +111,7 @@ define(['vue','vue-resource',
             },
             saveItems(purchase){
                 let self = this;
+                let cachedItems = self.selectedItems;
                 self.$http.post('api/purchase_item', {
                     items: self.selectedItems,
                     purchase_id: purchase.id
@@ -123,6 +124,7 @@ define(['vue','vue-resource',
                             self.deductItems();
                             self.creatingPurchases = false;
                             self.selectedItems = [];
+                            self.$emit('showreceipt', cachedItems);
                             require(['toastr'], function(toastr){
                                 toastr.success('Saved');
                                 $(':checkbox').prop('checked', false);

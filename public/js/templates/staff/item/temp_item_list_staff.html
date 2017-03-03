@@ -22,7 +22,6 @@
               <th width="1"></th>
               <th>Category</th>
               <th style="text-align: left">Item name</th>
-              <!-- <th>Purchase Price</th> -->
               <th>Selling Price</th>
               <th>Running Balance</th>
               <th>Unit</th>
@@ -47,8 +46,10 @@
       </div>
     </div>
   </div>
+  <modal-receipt></modal-receipt>
   <div v-show="creatingPurchases">
     <form-purchases 
+      @showreceipt="showReceiptModal"
       :selected-items.sync="selectedItems"
       :creating-purchases.sync="creatingPurchases"
       :items.sync="items"

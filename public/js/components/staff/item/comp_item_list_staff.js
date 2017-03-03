@@ -1,7 +1,8 @@
 define(['vue','vue-resource','underscore',
 	'text!templates/staff/item/temp_item_list_staff.html',
-    'components/staff/purchase/comp_form_create_purchases'], 
-	function(Vue, VueResource, _,template, CompFormPurchases) {
+    'components/staff/purchase/comp_form_create_purchases',
+    'components/staff/purchase/comp_modal_show_receipt'], 
+	function(Vue, VueResource, _,template, CompFormPurchases, CompReceipt) {
 
     Vue.use(VueResource);
     Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
@@ -29,6 +30,10 @@ define(['vue','vue-resource','underscore',
 
     	},
     	methods: {
+            showReceiptModal(){
+                let self = this;
+                $('#receipt-modal').modal('show');
+            },
             createPurchase(){
                 let self = this;
                 self.creatingPurchases = true;
@@ -89,7 +94,8 @@ define(['vue','vue-resource','underscore',
             }
         },
         components: {
-            'form-purchases': CompFormPurchases
+            'form-purchases': CompFormPurchases,
+            'modal-receipt': CompReceipt
         }
     });
    
